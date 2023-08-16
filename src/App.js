@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Pokemon from './Pokemon';
+import './App.css';
 
 function App() {
   const [pokemons, setPokemons] = useState([]); // The state for storing the pokemons array
@@ -20,15 +21,23 @@ function App() {
   }, []); // The dependency array for running the effect only once
 
   return (
-    <div className='container'>
-      <h1>Pokedox App</h1>
-      <ul className='pokemons-list'>
-        {pokemons.map(pokemon => (
-          // Map over the pokemons array and render a Pokemon component for each item
-          <Pokemon key={pokemon.name} pokemon={pokemon} /> // Pass the pokemon object as a prop
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className='container'>
+        <h1>Pokedex App</h1>
+        <br />
+        <ul className='pokemons-list'>
+          {pokemons.map(pokemon => (
+            // Map over the pokemons array and render a Pokemon component for each item
+            <Pokemon key={pokemon.name} pokemon={pokemon} /> // Pass the pokemon object as a prop
+          ))}
+        </ul>
+
+        {/* <div className='pagination'>
+          <button className='prev'>Prev</button>
+          <button className='next'>Next</button>
+        </div> */}
+      </div>
+    </>
   );
 }
 
