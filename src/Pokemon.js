@@ -7,7 +7,7 @@ function Pokemon({ pokemon }) {
   useEffect(() => {
     // The effect for fetching more data about the pokemon
     axios
-      .get(pokemon.url) // The endpoint for getting the pokemon details
+      .get(pokemon?.url) // The endpoint for getting the pokemon details
       .then(response => {
         // The callback for handling the successful response
         setDetails(response.data); // Set the details state with the data object
@@ -16,19 +16,24 @@ function Pokemon({ pokemon }) {
         // The callback for handling the error response
         console.error(error); // Log the error to the console
       });
-  }, [pokemon.url]); // The dependency array for running the effect whenever the pokemon prop changes
+  }, [pokemon?.url]); // The dependency array for running the effect whenever the pokemon prop changes
+
+  const firstLetterCaptial = name => {
+    let captial_letter = name.charAt(0).toUpperCase();
+    return captial_letter + name.slice(1);
+  };
 
   return (
     <li className='pokemon-card'>
       {details ? ( // Check if details is not null
         <>
-          <h2>{pokemon.name}</h2> {/* Render the pokemon name */}
+          <h2>{pokemon.name.toUpperCase()}</h2> {/* Render the pokemon name */}
           <img src={details.sprites.front_default} alt={pokemon.name} />{' '}
           {/* Render the pokemon image */}
           <ul className='pokemon-types'>
             {details.types.map(type => (
               // Map over the types array and render a list item for each type
-              <li key={type.type.name}>{type.type.name}</li> // Render the type name
+              <li key={type.type.name}>{firstLetterCaptial(type.type.name)}</li> // Render the type name
             ))}
           </ul>
         </>

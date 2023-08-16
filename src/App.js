@@ -5,6 +5,19 @@ import './App.css';
 
 function App() {
   const [pokemons, setPokemons] = useState([]); // The state for storing the pokemons array
+  const [currentPokemonIndex, setCurrentPokemonIndex] = useState(0);
+
+  const handlePrevClick = () => {
+    setCurrentPokemonIndex(prevIndex =>
+      prevIndex === 0 ? pokemons.length - 1 : prevIndex - 1
+    );
+  };
+
+  const handleNextClick = () => {
+    setCurrentPokemonIndex(prevIndex =>
+      prevIndex === pokemons.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
   useEffect(() => {
     // The effect for fetching the data from the PokeAPI
@@ -23,19 +36,23 @@ function App() {
   return (
     <>
       <div className='container'>
-        <h1>Pokedex App</h1>
+        <h1 className='container-heading'>Pokedex App</h1>
         <br />
-        <ul className='pokemons-list'>
-          {pokemons.map(pokemon => (
-            // Map over the pokemons array and render a Pokemon component for each item
-            <Pokemon key={pokemon.name} pokemon={pokemon} /> // Pass the pokemon object as a prop
-          ))}
-        </ul>
-
-        {/* <div className='pagination'>
-          <button className='prev'>Prev</button>
-          <button className='next'>Next</button>
-        </div> */}
+        <div>
+          <ul className='pokemons-list'>
+            <div className='pokemon'>
+              <Pokemon pokemon={pokemons[currentPokemonIndex]} />
+            </div>
+          </ul>
+          <div className='pagination'>
+            <button className='prev' onClick={handlePrevClick}>
+              Prev
+            </button>
+            <button className='next' onClick={handleNextClick}>
+              Next
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
